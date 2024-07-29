@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8" />
@@ -45,7 +45,7 @@
 </body>
 </html>
 
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -69,3 +69,27 @@
 </body>
 </html>
  -->
+
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        // Check if the URL already contains a hash to avoid an infinite loop
+        var path = window.location.pathname;
+        var search = window.location.search;
+
+        // Only redirect if not already redirected
+        if (!path.includes('IslamFragenWeb')) {
+            // Construct the new URL by combining the base URL and the pathname
+            var newUrl = window.location.origin + '/IslamFragenWeb' + path + search;
+            // Redirect to the new URL
+            window.location.replace(newUrl);
+        }
+    </script>
+</head>
+<body>
+    Redirecting...
+</body>
+</html>
