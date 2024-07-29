@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8" />
@@ -67,29 +67,37 @@
 <body>
     Redirecting...
 </body>
-</html>
+</html> -->
 
 
- <!-- <!DOCTYPE html>
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Redirecting...</title>
     <script type="text/javascript">
-        // Check if the URL already contains a hash to avoid an infinite loop
-        var path = window.location.pathname;
-        var search = window.location.search;
+        (function() {
+            var origin = window.location.origin;
+            var pathname = window.location.pathname;
+            var search = window.location.search;
 
-        // Only redirect if not already redirected
-        if (!path.includes('IslamFragenWeb')) {
             // Construct the new URL by combining the base URL and the pathname
-            var newUrl = window.location.origin + '/IslamFragenWeb' + path + search;
-            // Redirect to the new URL
-            window.location.replace(newUrl);
-        }
+            var newUrl = origin + '/IslamFragenWeb' + pathname + search;
+
+            // Redirect to the new URL only if it's different from the current URL
+            if (window.location.href !== newUrl) {
+                window.location.replace(newUrl);
+            } else {
+                // Log for debugging if redirection is not happening
+                console.log('Already on the target URL, no redirection needed.');
+                document.body.innerHTML = '<p>Could not redirect. Please check the URL and try again.</p>';
+            }
+        })();
     </script>
 </head>
 <body>
     Redirecting...
 </body>
-</html> -->
+</html>
