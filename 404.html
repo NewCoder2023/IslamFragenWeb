@@ -21,10 +21,14 @@
       const title = params.title;
       const table = params.table;
 
-      // Redirect to the URL based on title and table
+      // Construct the new URL based on title and table
       if (title && table) {
         const newUrl = `/IslamFragenWeb/text/${title}?id=1&table=${table}&title=${encodeURIComponent(title)}`;
-        window.location.href = newUrl;
+
+        // Check if the current URL is already the target URL to prevent infinite loop
+        if (window.location.href !== window.location.origin + newUrl) {
+          window.location.href = newUrl;
+        }
       } else {
         // Default redirect if query parameters are missing
         window.location.href = "/IslamFragenWeb";
