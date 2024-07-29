@@ -2,12 +2,34 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=/IslamFragenWeb" />
-    <script>
-      // Client-side redirect for browsers that don't support meta refresh
-      document.location.href = "/IslamFragenWeb";
-    </script>
     <title>Page Not Found</title>
+    <script>
+      // Function to get query parameters from the URL
+      function getQueryParams() {
+        const params = {};
+        const queryString = window.location.search.substring(1);
+        const regex = /([^&=]+)=([^&]*)/g;
+        let match;
+        while (match = regex.exec(queryString)) {
+          params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+        }
+        return params;
+      }
+
+      // Get query parameters
+      const params = getQueryParams();
+      const title = params.title;
+      const table = params.table;
+
+      // Redirect to the URL based on title and table
+      if (title && table) {
+        const newUrl = `/IslamFragenWeb/text/${title}?id=1&table=${table}&title=${encodeURIComponent(title)}`;
+        window.location.href = newUrl;
+      } else {
+        // Default redirect if query parameters are missing
+        window.location.href = "/IslamFragenWeb";
+      }
+    </script>
   </head>
   <body>
     <p>Redirecting...</p>
