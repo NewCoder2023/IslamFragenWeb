@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8" />
@@ -42,5 +42,30 @@
 </head>
 <body>
   <p>Redirecting...</p>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        // Extract the path from the URL
+        var pathname = window.location.pathname;
+
+        // Preserve the query string
+        var search = window.location.search;
+
+        // Construct the new URL by combining the base URL and the pathname
+        var newUrl = window.location.origin + '/IslamFragenWeb/index.html' + '#' + pathname + search;
+
+        // Redirect to the new URL
+        window.location.replace(newUrl);
+    </script>
+</head>
+<body>
+    Redirecting...
 </body>
 </html>
