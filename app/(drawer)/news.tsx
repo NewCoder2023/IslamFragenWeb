@@ -22,11 +22,18 @@ import HeaderFlashListIndex from "components/HeaderFlashListIndex";
 import { Image } from "expo-image";
 import { useRefetchNewsStore } from "components/refetchNews";
 import { useIsNewUpdateAvailable } from "components/newsUpdateStore";
+import { Loading } from "components/Loading";
 
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
-  const { posts, fetchError, refetch, updateAvailable, applyUpdates } =
-    fetchNews();
+  const {
+    posts,
+    fetchError,
+    refetch,
+    updateAvailable,
+    applyUpdates,
+    isFetching,
+  } = fetchNews();
   const { isLoading } = useIsUpLoading();
   const { isLoggedIn } = useAuthStore();
   const scrollRef = useRef<any>();
@@ -102,7 +109,7 @@ export default function index() {
             <Text style={styles.updateButtonText}>Aktualisieren</Text>
           </Pressable>
         )}
-        {fetchError ? (
+        {fetchError && (
           <ScrollView
             style={styles.fetchErrorScrollView}
             refreshControl={
@@ -113,6 +120,9 @@ export default function index() {
               {fetchError}
             </Text>
           </ScrollView>
+        )}
+        {isFetching ? (
+          <Loading message="Neuigkeiten werden geladen!"/>
         ) : posts.length == 0 && !fetchError ? (
           <ScrollView
             style={styles.noNewsScrollView}
