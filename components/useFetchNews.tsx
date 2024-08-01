@@ -11,7 +11,7 @@ interface NewsItem {
   created_at: Date;
 }
 
-// Test
+
 const fetchNewsData = async (): Promise<NewsItem[]> => {
   const { data, error } = await supabase
     .from("News")
