@@ -66,9 +66,7 @@ export default function index() {
     }
     refetch()
       .then(() => applyUpdates())
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((error) => {})
       .finally(() => {
         setRefreshing(false);
       });
@@ -122,7 +120,7 @@ export default function index() {
           </ScrollView>
         )}
         {isFetching ? (
-          <Loading message="Neuigkeiten werden geladen!"/>
+          <Loading message='Neuigkeiten werden geladen!' />
         ) : posts.length == 0 && !fetchError ? (
           <ScrollView
             style={styles.noNewsScrollView}

@@ -42,7 +42,7 @@ const about = () => {
             <Image
               source={require("assets/images/bufibLogo.png")}
               style={styles.image}
-              contentFit="contain"
+              contentFit='contain'
             />
           </View>
         </View>
@@ -61,15 +61,16 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   aboutContainer: {
-    marginHorizontal: 15,
+    marginHorizontal: 20,
     marginBottom: 40,
     marginTop: 20,
   },
   aboutText: {
+    textAlign: "justify",
     fontSize: 20,
   },
   imageContainer: {
-    alignItems: "center"
+    alignItems: "center",
   },
   image: {
     width: "65%",

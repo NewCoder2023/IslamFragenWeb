@@ -57,7 +57,7 @@ const initialFormState = {
 
 export default function askQuestion() {
   const colorScheme = useColorScheme();
-  const themeStyles = coustomTheme(colorScheme);
+  const themeStyles = coustomTheme();
 
   const [formState, setFormState] = useState(initialFormState);
   const {
@@ -178,7 +178,7 @@ export default function askQuestion() {
       if (success) {
         setShowCaptcha(false); // Hide captcha on success
         notifySuccess(
-          "Frage erfolgreich gesendet! Du erhälst die Antwort in wenigen Tagen als Email"
+          "Frage erfolgreich gesendet! Du erhälst die Antwort in wenigen Tagen als Email!"
         );
         router.navigate("/");
         setFormState(initialFormState); // Reset form state on success
@@ -260,7 +260,8 @@ export default function askQuestion() {
             onPress={() => setIsPickerVisibleGender(true)}
             style={
               {
-                outline: "none",
+                
+                //outline: "none",
               } as TextInputProps["style"]
             }
           >
@@ -314,7 +315,7 @@ export default function askQuestion() {
             onPress={() => setIsPickerVisibleMarja(true)}
             style={
               {
-                outline: "none",
+                //outline: "none",
               } as TextInputProps["style"]
             }
           >

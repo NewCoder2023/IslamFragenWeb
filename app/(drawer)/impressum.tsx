@@ -1,12 +1,10 @@
 import { ScrollView } from "react-native";
-import { Text, View } from "components/Themed";
+import { View } from "components/Themed";
 import React from "react";
 import { StyleSheet } from "react-native";
 import Markdown from "react-native-markdown-display";
-import { useColorScheme } from "react-native";
 import Colors from "constants/Colors";
 import { coustomTheme } from "components/coustomTheme";
-import { useTheme } from "@react-navigation/native";
 
 export default function impressum() {
   const impressum = `
@@ -26,9 +24,7 @@ export default function impressum() {
  Bund für islamische Bildung e.V.
   `;
 
-  const colorScheme = useColorScheme();
-
-  const themeStyles = coustomTheme(colorScheme);
+  const themeStyles = coustomTheme();
 
   return (
     <View style={styles.container}>

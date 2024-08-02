@@ -35,7 +35,6 @@ export const storeFavorites = async (
     await AsyncStorage.setItem("Favorites", jsonValue);
     change();
   } catch (e) {
-    console.log(e);
     notifyError(
       "Fehler beim Hinzufügen zu den Favoriten! Bitte überprüfen Sie Ihre Internetverbindung"
     );

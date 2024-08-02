@@ -11,16 +11,13 @@ interface Item {
   tableName: string; // Add tableName to store the category name
 }
 
-interface TopCategoryItem {
-  tableName: string;
-  questions: Item[];
-}
-
 const useSearchItems = (search: string) => {
   const [searchResults, setSearchResults] = useState<Item[]>([]);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { subCategories, isFetching } = useFetchSubCategories();
+  const { subCategories } = useFetchSubCategories();
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,13 +31,13 @@ const useSearchItems = (search: string) => {
         let flatQuestions: Item[] = [];
 
         // Flatten the questions into a single array and include tableName
-        subCategories.forEach((category: TopCategoryItem) => {
-          category.questions.forEach((question, index) => {
+        subCategories.forEach((category: any) => {
+          category.questions.forEach((question: any, index: any) => {
             if (question && question.question && question.title) {
-              flatQuestions.push({ 
-                ...question, 
-                tableName: category.tableName, // Ensure tableName is added here
-                id: `${category.tableName}-${index}` // Ensure unique id
+              flatQuestions.push({
+                ...question,
+                tableName: category.tableName, 
+                id: `${category.tableName}-${index}`, 
               });
             } else {
               console.error("Invalid question format", question);
@@ -74,7 +71,6 @@ const useSearchItems = (search: string) => {
     searchResults,
     fetchError,
     isLoading,
-    isFetching,
   };
 };
 

@@ -1,5 +1,5 @@
 import { View, Text } from "components/Themed";
-import { StyleSheet, ActivityIndicator } from "react-native";
+import { StyleSheet } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import Colors from "constants/Colors";
@@ -33,9 +33,6 @@ export default function RenderText() {
     table || "",
     title || ""
   );
-
-  console.log("table: " + table);
-  console.log("title: " + title);
 
   const {
     fontSize,
@@ -109,7 +106,7 @@ export default function RenderText() {
 
   return (
     <View style={styles.container}>
-      <CustomToastContainer width={300}/>
+      <CustomToastContainer width={300} />
       <FontSizePickerModal
         visible={isPickerVisible}
         onClose={() => setIsPickerVisible(false)}

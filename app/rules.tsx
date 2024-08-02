@@ -55,7 +55,7 @@ export default function rules() {
           {"\n"}
           {"\n"}
           11. Durch das Absenden der Frage, bist du damit einverstanden, dass
-          wir Deine Frage zusammen mit unserer Antwort, *ohne* Angabe jeglicher
+          wir Deine Frage zusammen mit unserer Antwort, <Text style={{fontWeight: "bold",}}>ohne</Text> Angabe jeglicher
           persönlicher Daten des Absenders, in der Datenbank der App aufzunehmen
           und sie zu veröffentlichen.
           {"\n"}
