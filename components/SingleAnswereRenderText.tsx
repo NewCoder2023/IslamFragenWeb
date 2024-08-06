@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
   },
   copyContainerSingle: {
     marginTop: 10,
+    height: 30,
     backgroundColor: "transparent",
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: "transparent",
-    paddingBottom: 2
+   
   },
   copyDoneText: {
     marginLeft: 5,

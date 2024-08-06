@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
   },
   copyContainer: {
     backgroundColor: "transparent",
+    height: 30,
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "flex-start",
@@ -221,7 +222,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: "transparent",
-    paddingBottom: 2
   },
   copyDoneText: {
     marginLeft: 5,
