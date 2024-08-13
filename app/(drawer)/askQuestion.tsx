@@ -21,15 +21,13 @@ import { Text } from "components/Themed";
 import ConfirmHcaptcha from "@hcaptcha/react-native-hcaptcha";
 import { router } from "expo-router";
 import * as Network from "expo-network";
+import { siteKey, baseUrl } from "utils/hCaptcha";
 import {
   CustomToastContainer,
   notifySuccess,
   notifyError,
   notifyInfo,
 } from "components/toast";
-
-const siteKey = "46059823-5a16-4179-98ac-347075bcf465";
-const baseUrl = "https://hcaptcha.com";
 
 const genderOptions = [
   { label: "-- Wähle bitte dein Geschlecht aus --", value: "default" },
@@ -260,7 +258,6 @@ export default function askQuestion() {
             onPress={() => setIsPickerVisibleGender(true)}
             style={
               {
-                
                 //outline: "none",
               } as TextInputProps["style"]
             }

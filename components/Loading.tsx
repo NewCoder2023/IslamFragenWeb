@@ -4,7 +4,7 @@ import { useColorScheme } from "hooks/useColorScheme.web";
 import { StyleSheet } from "react-native";
 import React from "react";
 
-export const Loading =({ message }: { message: string }) => {
+export const Loading = ({ message }: { message: string }) => {
   const colorScheme = useColorScheme();
   return (
     <View style={styles.container}>
@@ -12,9 +12,7 @@ export const Loading =({ message }: { message: string }) => {
         size='large'
         color={colorScheme == "light" ? "black" : "white"}
       />
-      <Text style={styles.loadingIndicatorText}>
-       {message}
-      </Text>
+      <Text style={styles.loadingIndicatorText}>{message}</Text>
       <Text style={styles.loadingIndicatorText}>
         Allahumma salli ala Muhammad wa aali Muhammad
       </Text>
@@ -22,11 +20,11 @@ export const Loading =({ message }: { message: string }) => {
   );
 };
 const styles = StyleSheet.create({
-    container: {
+  container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-   
+    marginHorizontal: 10,
   },
   loadingIndicatorText: {
     fontSize: 20,

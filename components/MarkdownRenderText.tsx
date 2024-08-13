@@ -21,7 +21,7 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content }) => {
           ...themeStyles.markdownText,
           fontSize: fontSize,
           lineHeight: lineHeight,
-          fontFamily: "Helvetica",
+          fontFamily: "arial",
         },
         heading1: {
           fontSize: fontSize + 5,
