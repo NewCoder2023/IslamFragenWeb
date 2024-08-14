@@ -1,9 +1,9 @@
-import React from 'react';
-import { Platform } from 'react-native';
-import Markdown from 'react-native-markdown-display';
-import { coustomTheme } from 'components/coustomTheme';
-import { useColorScheme } from 'hooks/useColorScheme.web';
-import { useSetFontSize } from 'components/fontSizeStore';
+import React from "react";
+import { Platform } from "react-native";
+import Markdown from "react-native-markdown-display";
+import { coustomTheme } from "components/coustomTheme";
+import { useColorScheme } from "hooks/useColorScheme.web";
+import { useSetFontSize } from "components/fontSizeStore";
 
 interface CustomMarkdownProps {
   content: string | undefined;
@@ -21,7 +21,6 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content }) => {
           ...themeStyles.markdownText,
           fontSize: fontSize,
           lineHeight: lineHeight,
-          fontFamily: "arial",
         },
         heading1: {
           fontSize: fontSize + 5,
@@ -29,18 +28,18 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content }) => {
         heading2: {
           ...themeStyles.markdownText,
           fontSize: fontSize + 10,
-          textAlign: 'center',
+          textAlign: "center",
         },
         heading3: {
           ...themeStyles.markdownText,
           fontSize: fontSize + 10,
-          fontWeight: 'bold',
+          fontWeight: "bold",
         },
         heading4: {
           ...themeStyles.markdownText,
           fontSize: fontSize + 10,
-          textAlign: 'center',
-          fontWeight: 'bold',
+          textAlign: "center",
+          fontWeight: "bold",
         },
         heading5: {
           ...themeStyles.markdownText,
@@ -49,7 +48,7 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ content }) => {
         heading6: {
           ...themeStyles.markdownText,
           fontSize: fontSize,
-          textAlign: 'center',
+          textAlign: "center",
         },
       }}
     >
