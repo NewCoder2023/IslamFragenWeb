@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import {  StyleSheet, Dimensions, Pressable } from "react-native";
+import { StyleSheet, Dimensions, Pressable } from "react-native";
 import { Text, View } from "./Themed";
 import { Image } from "expo-image";
-import { FontAwesome } from "@expo/vector-icons";
+import Octicons from "@expo/vector-icons/Octicons";
+import Feather from "@expo/vector-icons/Feather";
 import { deletePosts } from "components/deletePosts";
 import Colors from "constants/Colors";
 import ImageCount from "./ImageCount";
@@ -36,7 +37,6 @@ export const RenderItemsFlashList = ({
     }
   };
 
-
   return (
     <View style={[styles.container, themeStyles.containerContrast]}>
       <View style={styles.newsHeader}>
@@ -47,9 +47,10 @@ export const RenderItemsFlashList = ({
         />
         <Text style={styles.newsHeaderText}>Islam-Fragen</Text>
         {isLoggedIn ? (
-          <FontAwesome
-            name='trash-o'
+          <Feather
+            name='trash-2'
             size={24}
+            color='black'
             style={themeStyles.trashIcon}
             onPress={() => deletePosts(item.id)}
           />
@@ -73,24 +74,34 @@ export const RenderItemsFlashList = ({
               <>
                 <View style={styles.buttonContainer}>
                   <Pressable onPress={prevImage} style={styles.button}>
-                    <AntDesign name='arrowleft' size={34} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign
+                      name='arrowleft'
+                      size={34}
+                      color={colorScheme === "light" ? "black" : "white"}
+                    />
                   </Pressable>
                   <Pressable onPress={nextImage} style={styles.button}>
-                    <AntDesign name='arrowright' size={34} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign
+                      name='arrowright'
+                      size={34}
+                      color={colorScheme === "light" ? "black" : "white"}
+                    />
                   </Pressable>
                 </View>
                 <ImageCount
                   displayImageCounter={item.imagePaths.map((_, index) =>
                     index === currentIndex ? (
-                      <FontAwesome
-                        name='circle'
-                        size={10}
+                      <Octicons
+                        name='dot'
+                        size={15}
+                        color='black'
                         style={themeStyles.characterCountNewsImage}
                       />
                     ) : (
-                      <FontAwesome
-                        name='circle-o'
-                        size={10}
+                      <Octicons
+                        name='dot-fill'
+                        size={15}
+                        color='black'
                         style={themeStyles.characterCountNewsImage}
                       />
                     )
@@ -204,7 +215,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 50,
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
   },
   button: {
     padding: 10,

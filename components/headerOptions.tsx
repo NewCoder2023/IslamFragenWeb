@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable, TextStyle } from "react-native";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Octicons from '@expo/vector-icons/Octicons';
 import Feather from "@expo/vector-icons/Feather";
 
 type ColorScheme = "light" | "dark";
@@ -12,9 +12,9 @@ const getHeaderRight = (
 ) => (
   <Pressable onPress={toggleColorScheme} style={{ marginRight: 20 }}>
     {colorScheme === "light" ? (
-      <FontAwesome name='moon-o' size={24} color='black' />
+     <Octicons name="moon" size={28} color="black" />
     ) : (
-      <Feather name='sun' size={24} color='white' />
+      <Feather name='sun' size={26} color='white' />
     )}
   </Pressable>
 );
