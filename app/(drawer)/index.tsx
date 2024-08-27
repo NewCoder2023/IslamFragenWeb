@@ -21,9 +21,7 @@ export default function index() {
     initializeSettings();
   }, []);
 
-  useEffect(() => {
-    Image.prefetch(require("assets/images/background.png"));
-  }, []);
+ 
 
   return (
     <View style={styles.container}>
