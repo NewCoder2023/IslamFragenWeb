@@ -14,7 +14,7 @@ import { formatTitle } from "components/formatTitle";
 import {
   CustomToastContainer,
   notifyError,
-  notifyInfo,
+  notifySuccess,
 } from "components/toast";
 import useInitializeSettings from "components/useInitializeSettings";
 import FontSizePickerModal from "components/FontSizePickerModal";
@@ -63,15 +63,12 @@ export default function RenderText() {
     setFontSize,
     setLineHeight
   );
-
-  // Check for internet conncetion 
-  const isConnected = useNetworkStatus();
+  // Check for internet conncetion
+  const { isConnected } = useNetworkStatus();
 
   useEffect(() => {
     if (isConnected === false) {
-      notifyError(
-        "Es besteht aktuell keine Internetverbindung! Änderungen an dieser Frage können nicht angezeigt werden!"
-      );
+      notifyError("Keine Internetverbindung!");
     }
   }, [isConnected]);
 
@@ -123,7 +120,7 @@ export default function RenderText() {
 
   return (
     <View style={styles.container}>
-      <CustomToastContainer width={isConnected ? 400 : 500} time={30000} />
+      <CustomToastContainer width={300} time={30000} />
       <FontSizePickerModal
         visible={isPickerVisible}
         onClose={() => setIsPickerVisible(false)}
