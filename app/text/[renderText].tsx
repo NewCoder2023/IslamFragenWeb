@@ -1,6 +1,7 @@
 import { View, Text } from "components/Themed";
 import { StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { router, useLocalSearchParams } from "expo-router";
 import Colors from "constants/Colors";
 import { Stack } from "expo-router";
@@ -25,11 +26,9 @@ import { copyMultipleAnswers } from "components/copyMultipleAnswers";
 import MultipleAnswers from "components/MultipleAnswersRenderText";
 import { useFetchText } from "components/useFetchText";
 import { Loading } from "components/Loading";
-import * as Network from "expo-network";
+import useNetworkStatus from "components/useNetworkStatus";
 
 export default function RenderText() {
-  const [isConnected, setIsConnected] = useState(false);
-  const [showToastInternet, setShowToastInternet] = useState(false);
   const { id, table, title } = useLocalSearchParams<{
     id: string;
     table: string;
@@ -65,39 +64,16 @@ export default function RenderText() {
     setLineHeight
   );
 
-  // Check if connected to the internet to be able to receive updates
+  // Check for internet conncetion 
+  const isConnected = useNetworkStatus();
 
   useEffect(() => {
-    const checkNetworkStatus = async () => {
-      try {
-        const networkState = await Network.getNetworkStateAsync();
-        const isConnected = networkState.isConnected ?? false;
-        setIsConnected(isConnected);
-
-        // Show the toast only if the device is not connected
-        if (!isConnected) {
-          setShowToastInternet(true);
-        } else {
-          setShowToastInternet(false);
-        }
-      } catch (error) {
-        setIsConnected(false);
-        setShowToastInternet(true);
-      }
-    };
-
-    checkNetworkStatus();
-  }, []);
-
-  // Effect to show the toast message
-  useEffect(() => {
-    if (showToastInternet) {
+    if (isConnected === false) {
       notifyError(
-        "Es besteht akutell keine Internetverbindung! Änderungen an dieser Frage werden können nicht angezeigt werden!"
+        "Es besteht aktuell keine Internetverbindung! Änderungen an dieser Frage können nicht angezeigt werden!"
       );
-      setShowToastInternet(false); // Reset the showToast after displaying the message
     }
-  }, [showToastInternet]);
+  }, [isConnected]);
 
   // Clean Timeout
   const cleanTimeout = () => {
@@ -144,11 +120,10 @@ export default function RenderText() {
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     );
   };
-  console.log(showToastInternet);
 
   return (
     <View style={styles.container}>
-      <CustomToastContainer width={isConnected ? 400 : 500} time={10000} />
+      <CustomToastContainer width={isConnected ? 400 : 500} time={30000} />
       <FontSizePickerModal
         visible={isPickerVisible}
         onClose={() => setIsPickerVisible(false)}
@@ -159,16 +134,17 @@ export default function RenderText() {
       />
       <Stack.Screen
         options={{
-          headerRight: () => isConnected && (
-            <HeaderRight
-              isInFavorites={isInFavorites}
-              id={id}
-              table={table}
-              title={title}
-              toggleFavorite={toggleFavorite}
-              setIsPickerVisible={setIsPickerVisible}
-            />
-          ),
+          headerRight: () =>
+            isConnected && (
+              <HeaderRight
+                isInFavorites={isInFavorites}
+                id={id}
+                table={table}
+                title={title}
+                toggleFavorite={toggleFavorite}
+                setIsPickerVisible={setIsPickerVisible}
+              />
+            ),
           headerLeft: () => <HeaderLeft canBack={canBack} />,
           headerTitle: item ? formatTitle(item.title) : "",
         }}

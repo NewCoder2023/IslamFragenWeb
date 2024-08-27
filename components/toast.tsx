@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 const notifySuccess = (message: string) =>
   toast.success(message, {
     position: "top-left",
-    autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
     pauseOnHover: false,
@@ -18,7 +17,6 @@ const notifySuccess = (message: string) =>
 const notifyError = (message: string) =>
   toast.error(message, {
     position: "top-left",
-    autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
     pauseOnHover: false,
@@ -30,7 +28,6 @@ const notifyError = (message: string) =>
 const notifyInfo = (message: string) =>
   toast.info(message, {
     position: "top-left",
-    autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: true,
     pauseOnHover: false,
@@ -52,7 +49,7 @@ const CustomToastContainer = ({ width = 300, time = 5000 }) => (
       draggable
       pauseOnHover
       theme='light'
-      style={{ marginTop: 80, width: "80%", maxWidth: width, lineHeight: 1.5}}
+      style={{ marginTop: 80, width: "80%", maxWidth: width, lineHeight: 1.5 }}
     />
   </>
 );

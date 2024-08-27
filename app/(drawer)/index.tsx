@@ -34,6 +34,7 @@ export default function index() {
             source={require("assets/images/background.png")}
             style={styles.calligraphyBackground}
             resizeMode={"repeat"}
+            
           >
             <View style={styles.headerElements}>
               <View style={styles.headerImageContainer}>
@@ -86,6 +87,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     height: "100%",
+
   },
 
   headerElements: {
