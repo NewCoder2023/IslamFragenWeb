@@ -21,19 +21,16 @@ export default function index() {
     initializeSettings();
   }, []);
 
- 
-
   return (
     <View style={styles.container}>
       <CustomToastContainer width={450} />
       <View style={[styles.headerContainer, themeStyles.indexBorderDash]}>
         <View style={[styles.header, themeStyles.backgroundIndexHeader]}>
-          <ImageBackground
+          {/* <ImageBackground
             source={require("assets/images/background.png")}
             style={styles.calligraphyBackground}
             resizeMode={"repeat"}
-            
-          >
+          > */}
             <View style={styles.headerElements}>
               <View style={styles.headerImageContainer}>
                 <Image
@@ -52,7 +49,7 @@ export default function index() {
                 </Text>
               </View>
             </View>
-          </ImageBackground>
+          {/* </ImageBackground> */}
         </View>
       </View>
 
@@ -85,7 +82,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     height: "100%",
-
   },
 
   headerElements: {
@@ -116,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
   headerImage: {
-    width: "100%", // Take full width of the container
+    width: "100%", 
     height: "100%",
   },
   border: {
