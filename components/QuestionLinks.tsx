@@ -172,8 +172,8 @@ const styles = StyleSheet.create({
   },
 
   elementIcon: {
-    width: "50%",
-    maxWidth: 90,
+    width: "40%",
+    maxWidth: 65,
     height: "auto",
     aspectRatio: 1,
     alignSelf: "center",

@@ -3,7 +3,7 @@ import { StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { useColorScheme } from "react-native";
+import { useColorScheme } from "hooks/useColorScheme.web";
 import { coustomTheme } from "./coustomTheme";
 
 interface Item {

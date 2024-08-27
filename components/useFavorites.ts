@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CustomToastContainer,
   notifySuccess,
@@ -20,7 +20,7 @@ export default function useFavorites() {
 
   const { change } = useIsChanging();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const loadFavorites = async () => {
       const fav = await getFavorites();
       setFavorites(fav);

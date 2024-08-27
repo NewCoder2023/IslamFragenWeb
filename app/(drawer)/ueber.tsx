@@ -66,8 +66,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   aboutText: {
-    textAlign: "justify",
     fontSize: 20,
+    lineHeight: 30,
+    paddingHorizontal: 20,
   },
   imageContainer: {
     alignItems: "center",

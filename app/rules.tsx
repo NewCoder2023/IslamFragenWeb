@@ -85,7 +85,10 @@ const styles = StyleSheet.create({
   },
   mainText: {
     marginHorizontal: 15,
+    paddingHorizontal: 20,
     fontSize: 20,
     paddingBottom: 40,
+    lineHeight: 30,
+    
   },
 });

@@ -1,6 +1,6 @@
 import { View, Text } from "components/Themed";
 import { StyleSheet } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { useLocalSearchParams } from "expo-router";
 import RenderSubCategories from "components/RenderSubCategories";
 import { Stack } from "expo-router";

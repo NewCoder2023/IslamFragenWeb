@@ -29,7 +29,7 @@ export const lightTheme = {
   indexCategoryTextBorder: {
     borderColor: Colors.light.indexCategoryTextBorder,
   },
-  backgroundIndex: {
+  backgroundIndexHeader: {
     backgroundColor: Colors.light.backgroundIndexHeader,
   },
   link: {
@@ -136,7 +136,7 @@ export const darkTheme = {
     borderColor: Colors.dark.indexBorderDash,
     color: Colors.dark.indexBorderDash,
   },
-  backgroundIndex: {
+  backgroundIndexHeader: {
     backgroundColor: Colors.dark.backgroundIndexHeader,
   },
   shadow: {

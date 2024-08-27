@@ -39,11 +39,11 @@ const notifyInfo = (message: string) =>
     theme: "dark",
   });
 
-const CustomToastContainer = ({ width = 300 }) => (
+const CustomToastContainer = ({ width = 300, time = 5000 }) => (
   <>
     <ToastContainer
       position='top-left'
-      autoClose={5000}
+      autoClose={time}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick

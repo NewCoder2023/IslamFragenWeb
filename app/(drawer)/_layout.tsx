@@ -93,6 +93,14 @@ export default function Layout() {
               ...createScreenOptions(colorScheme, toggleColorScheme),
             }}
           />
+          <Drawer.Screen
+            name='datenschutz' // This is the name of the page and must match the url from root
+            options={{
+              drawerLabel: "Datenschutz",
+              title: "Datenschutz",
+              ...createScreenOptions(colorScheme, toggleColorScheme),
+            }}
+          />
         </Drawer>
       </QueryClientProvider>
     </GestureHandlerRootView>

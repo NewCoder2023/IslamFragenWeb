@@ -18,6 +18,7 @@ interface AnswersScrollViewProps {
   cleanTimeout: () => void;
   timeoutRef: React.MutableRefObject<any>;
   colorScheme: string | null;
+  isConnected: boolean;
 }
 const SingleAnswer: React.FC<AnswersScrollViewProps> = ({
   themeStyles,
@@ -32,6 +33,7 @@ const SingleAnswer: React.FC<AnswersScrollViewProps> = ({
   cleanTimeout,
   timeoutRef,
   colorScheme,
+  isConnected,
 }) => {
   return (
     <ScrollView
@@ -49,6 +51,14 @@ const SingleAnswer: React.FC<AnswersScrollViewProps> = ({
             {displayQuestion}
           </Text>
         </View>
+        {!isConnected && (
+          <View style={styles.noInternet}>
+            <Text style={[styles.noInternetText, themeStyles.error]}>
+              Es besteht akutell keine Internetverbindung! Änderungen an dieser
+              Frage werden können nicht angezeigt werden!
+            </Text>
+          </View>
+        )}
         <View style={styles.answersContainer}>
           <View style={[styles.singleAnswers, themeStyles.containerContrast]}>
             <View style={styles.copyContainerSingle}>
@@ -111,6 +121,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
+  noInternet: {
+    marginTop: 15,
+    marginHorizontal: 20,
+    padding: 15,
+    borderWidth: 2,
+    borderRadius: 20,
+  },
+  noInternetText: {
+    textAlign: "center",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
   questionText: {
     textAlign: "center",
     fontWeight: "bold",
@@ -144,7 +166,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: "transparent",
-   
   },
   copyDoneText: {
     marginLeft: 5,

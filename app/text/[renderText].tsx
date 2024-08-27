@@ -1,6 +1,6 @@
 import { View, Text } from "components/Themed";
 import { StyleSheet } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import Colors from "constants/Colors";
 import { Stack } from "expo-router";
@@ -10,7 +10,11 @@ import useFavorites from "components/useFavorites";
 import { coustomTheme } from "components/coustomTheme";
 import { useSetFontSize } from "components/fontSizeStore";
 import { formatTitle } from "components/formatTitle";
-import { CustomToastContainer } from "components/toast";
+import {
+  CustomToastContainer,
+  notifyError,
+  notifyInfo,
+} from "components/toast";
 import useInitializeSettings from "components/useInitializeSettings";
 import FontSizePickerModal from "components/FontSizePickerModal";
 import HeaderRight from "components/HeaderRightRenderText";
@@ -21,8 +25,11 @@ import { copyMultipleAnswers } from "components/copyMultipleAnswers";
 import MultipleAnswers from "components/MultipleAnswersRenderText";
 import { useFetchText } from "components/useFetchText";
 import { Loading } from "components/Loading";
+import * as Network from "expo-network";
 
 export default function RenderText() {
+  const [isConnected, setIsConnected] = useState(false);
+  const [showToastInternet, setShowToastInternet] = useState(false);
   const { id, table, title } = useLocalSearchParams<{
     id: string;
     table: string;
@@ -58,6 +65,40 @@ export default function RenderText() {
     setLineHeight
   );
 
+  // Check if connected to the internet to be able to receive updates
+
+  useEffect(() => {
+    const checkNetworkStatus = async () => {
+      try {
+        const networkState = await Network.getNetworkStateAsync();
+        const isConnected = networkState.isConnected ?? false;
+        setIsConnected(isConnected);
+
+        // Show the toast only if the device is not connected
+        if (!isConnected) {
+          setShowToastInternet(true);
+        } else {
+          setShowToastInternet(false);
+        }
+      } catch (error) {
+        setIsConnected(false);
+        setShowToastInternet(true);
+      }
+    };
+
+    checkNetworkStatus();
+  }, []);
+
+  // Effect to show the toast message
+  useEffect(() => {
+    if (showToastInternet) {
+      notifyError(
+        "Es besteht akutell keine Internetverbindung! Änderungen an dieser Frage werden können nicht angezeigt werden!"
+      );
+      setShowToastInternet(false); // Reset the showToast after displaying the message
+    }
+  }, [showToastInternet]);
+
   // Clean Timeout
   const cleanTimeout = () => {
     if (timeoutRef.current) {
@@ -66,7 +107,7 @@ export default function RenderText() {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // initialFetchDone();
     initializeSettings();
     router.canGoBack() ? setCanBack(true) : setCanBack(false);
@@ -103,10 +144,11 @@ export default function RenderText() {
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     );
   };
+  console.log(showToastInternet);
 
   return (
     <View style={styles.container}>
-      <CustomToastContainer width={300} />
+      <CustomToastContainer width={isConnected ? 400 : 500} time={10000} />
       <FontSizePickerModal
         visible={isPickerVisible}
         onClose={() => setIsPickerVisible(false)}
@@ -117,7 +159,7 @@ export default function RenderText() {
       />
       <Stack.Screen
         options={{
-          headerRight: () => (
+          headerRight: () => isConnected && (
             <HeaderRight
               isInFavorites={isInFavorites}
               id={id}
@@ -151,6 +193,7 @@ export default function RenderText() {
           cleanTimeout={cleanTimeout}
           timeoutRef={timeoutRef}
           colorScheme={colorScheme}
+          isConnected={isConnected}
         />
       ) : (
         <MultipleAnswers
@@ -170,6 +213,7 @@ export default function RenderText() {
           timeoutRef={timeoutRef}
           colorScheme={colorScheme}
           images={images}
+          isConnected={isConnected}
         />
       )}
     </View>

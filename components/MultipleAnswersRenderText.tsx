@@ -24,6 +24,7 @@ interface MultipleAnswersProps {
   colorScheme: string | null;
   images: { [key: string]: any };
   displayAnswers: { marja: string; answer: string | undefined }[];
+  isConnected: boolean;
 }
 
 const MultipleAnswers: React.FC<MultipleAnswersProps> = ({
@@ -43,6 +44,7 @@ const MultipleAnswers: React.FC<MultipleAnswersProps> = ({
   timeoutRef,
   colorScheme,
   images,
+  isConnected,
 }) => {
   const filteredAnswers =
     marja.length > 0
@@ -82,6 +84,14 @@ const MultipleAnswers: React.FC<MultipleAnswersProps> = ({
             </View>
           ))}
         </View>
+        {!isConnected && (
+          <View style={styles.noInternet}>
+            <Text style={[styles.noInternetText, themeStyles.error]}>
+              Es besteht akutell keine Internetverbindung! Änderungen an dieser
+              Frage werden können nicht angezeigt werden!
+            </Text>
+          </View>
+        )}
         <View style={styles.answersContainer}>
           {filteredAnswers.map((answer, index) => (
             <View
@@ -195,6 +205,19 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 5,
     paddingLeft: 5,
+    fontWeight: "bold",
+  },
+  noInternet: {
+    marginTop: 10,
+    marginHorizontal: 20,
+    marginBottom: 30,
+    padding: 15,
+    borderWidth: 2,
+    borderRadius: 20,
+  },
+  noInternetText: {
+    textAlign: "center",
+    fontSize: 15,
     fontWeight: "bold",
   },
   answersContainer: {

@@ -219,9 +219,9 @@ export default function askQuestion() {
         contentContainerStyle={styles.scrollContent}
         style={styles.scrollStyle}
         ref={scrollViewRef}
-        onContentSizeChange={() =>
-          scrollViewRef.current.scrollToEnd({ animated: true })
-        }
+        // onContentSizeChange={() =>
+        //   scrollViewRef.current.scrollToEnd({ animated: true })
+        // }
       >
         <View style={styles.textInputContainer}>
           <TextInput

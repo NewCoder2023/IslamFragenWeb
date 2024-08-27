@@ -6,7 +6,7 @@ import { Image } from "expo-image";
 import { ImageBackground } from "react-native";
 import { useSetFontSize } from "components/fontSizeStore";
 import { CustomToastContainer } from "components/toast";
-import { useLayoutEffect } from "react";
+import { useEffect, useState } from "react";
 import useInitializeSettings from "components/useInitializeSettings";
 
 export default function index() {
@@ -17,39 +17,46 @@ export default function index() {
     setLineHeight
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     initializeSettings();
+  }, []);
+
+  useEffect(() => {
+    Image.prefetch(require("assets/images/background.png"));
   }, []);
 
   return (
     <View style={styles.container}>
       <CustomToastContainer width={450} />
       <View style={[styles.headerContainer, themeStyles.indexBorderDash]}>
-        <View style={[styles.header, themeStyles.backgroundIndex]}>
-          {/* <ImageBackground
+        <View style={[styles.header, themeStyles.backgroundIndexHeader]}>
+          <ImageBackground
             source={require("assets/images/background.png")}
             style={styles.calligraphyBackground}
-          > */}
-          <View style={styles.headerElements}>
-            <View style={styles.headerImageContainer}>
-              <Image
-                style={styles.headerImage}
-                source={require("assets/images/logo.png")}
-                contentFit='contain'
-              />
+            resizeMode={"repeat"}
+          >
+            <View style={styles.headerElements}>
+              <View style={styles.headerImageContainer}>
+                <Image
+                  style={styles.headerImage}
+                  source={require("assets/images/logo.png")}
+                  contentFit='contain'
+                />
+              </View>
+
+              <View style={styles.headerTextContainer}>
+                <Text style={[styles.headerText, themeStyles.inverseTextIndex]}>
+                  Islam-Fragen
+                </Text>
+                <Text style={[styles.headerDash, themeStyles.indexBorderDash]}>
+                  __________
+                </Text>
+              </View>
             </View>
-            <View style={styles.headerTextContainer}>
-              <Text style={[styles.headerText, themeStyles.inverseTextIndex]}>
-                Islam-Fragen
-              </Text>
-              <Text style={[styles.headerDash, themeStyles.indexBorderDash]}>
-                __________
-              </Text>
-            </View>
-          </View>
-          {/* </ImageBackground> */}
+          </ImageBackground>
         </View>
       </View>
+
       <View style={styles.categoryContainer}>
         <QuestionLinks />
       </View>
@@ -73,8 +80,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   calligraphyBackground: {
-    flex: 1,
-    resizeMode: "cover",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: "100%",
   },
 
   headerElements: {

@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView } from "components/Themed";
 import Colors from "constants/Colors";
 import fetchNews from "components/useFetchNews";
 import { useAuthStore } from "components/authStore";
-import { useCallback, useState, useRef, useMemo, useLayoutEffect } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { useIsUpLoading } from "components/uploadingStore";
 import { FlashList } from "@shopify/flash-list";
 import { Feather } from "@expo/vector-icons";
@@ -46,7 +46,7 @@ export default function index() {
   const { hasRefetched, setRefetch } = useRefetchNewsStore();
   const { newUpdateAvailable, update } = useIsNewUpdateAvailable();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!hasRefetched) {
       refetch();
       setRefetch();
