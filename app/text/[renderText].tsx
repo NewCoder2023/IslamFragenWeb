@@ -14,7 +14,6 @@ import { formatTitle } from "components/formatTitle";
 import {
   CustomToastContainer,
   notifyError,
-  notifySuccess,
 } from "components/toast";
 import useInitializeSettings from "components/useInitializeSettings";
 import FontSizePickerModal from "components/FontSizePickerModal";
