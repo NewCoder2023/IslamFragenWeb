@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
-  TextInputProps,
   Pressable,
   Modal,
 } from "react-native";
@@ -14,172 +13,55 @@ import { useColorScheme } from "react-native";
 import { coustomTheme } from "components/coustomTheme";
 import Checkbox from "expo-checkbox";
 import { useSendQuestion } from "components/useSendQuestion";
-import Toast from "react-native-toast-message";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { Picker } from "@react-native-picker/picker";
 import { Text } from "components/Themed";
-import ConfirmHcaptcha from "@hcaptcha/react-native-hcaptcha";
 import { router } from "expo-router";
-import * as Network from "expo-network";
-import { siteKey, baseUrl } from "utils/hCaptcha";
-import {
-  CustomToastContainer,
-  notifySuccess,
-  notifyError,
-  notifyInfo,
-} from "components/toast";
-
-const genderOptions = [
-  { label: "-- Wähle bitte dein Geschlecht aus --", value: "default" },
-  { label: "Männlich", value: "Männlich" },
-  { label: "Weiblich", value: "Weiblich" },
-];
-
-const marjaOptions = [
-  { label: "-- Wähle bitte deinen Marja aus --", value: "default" },
-  { label: "Sayid al-Khamenei", value: "Sayid al-Khamenei" },
-  { label: "Sayid as-Sistani", value: "Sayid as-Sistani" },
-  { label: "Keine Rechtsfrage", value: "Keine Rechtsfrage" },
-];
-
-const initialFormState = {
-  name: "",
-  age: "",
-  email: "",
-  validateEmail: "",
-  marja: marjaOptions[0].value,
-  gender: genderOptions[0].value,
-  question: "",
-  acceptRules: false,
-};
+import { notifySuccess, notifyError } from "components/toast";
+import useNetworkStatus from "components/useNetworkStatus";
+import { genderOptions, marjaOptions } from "components/emailOptions";
+import { useFormikSetup } from "components/useFormikSetup";
 
 export default function askQuestion() {
-  const colorScheme = useColorScheme();
-  const themeStyles = coustomTheme();
-
-  const [formState, setFormState] = useState(initialFormState);
-  const {
-    name,
-    age,
-    email,
-    validateEmail,
-    marja,
-    gender,
-    question,
-    acceptRules,
-  } = formState;
-
   const [isPickerVisibleMarja, setIsPickerVisibleMarja] = useState(false);
   const [isPickerVisibleGender, setIsPickerVisibleGender] = useState(false);
+  const colorScheme = useColorScheme();
+  const themeStyles = coustomTheme();
+  const scrollViewRef = useRef(null);
   const { sendEmail } = useSendQuestion();
   const captchaRef = useRef(null);
   const [captchaToken, setCaptchaToken] = useState("");
   const [showCaptcha, setShowCaptcha] = useState(false);
-  const [isFormValid, setIsFormValid] = useState(false);
+  const { isConnected } = useNetworkStatus();
 
-  const scrollViewRef = useRef(null);
+  // Get formik setup from import
+  const formik = useFormikSetup(
+    isConnected,
+    sendEmail,
+    setShowCaptcha,
+    setCaptchaToken
+  );
 
-  useEffect(() => {
-    if (showCaptcha && captchaRef.current) {
-      captchaRef.current.execute();
-    }
-  }, [showCaptcha]);
-
-  useEffect(() => {
-    // Reset the form state when the component mounts
-    setFormState(initialFormState);
-  }, []);
-
-  const validateForm = () => {
-    if (
-      !age ||
-      !email ||
-      !validateEmail ||
-      !question ||
-      question.trim() === ""
-    ) {
-      notifyError("Bitte fülle alle Pflichtfelder aus!");
-      return false;
-    }
-
-    const ageNumber = parseInt(age);
-    if (isNaN(ageNumber) || ageNumber <= 0) {
-      notifyError("Bitte gebe ein gültiges Alter ein!");
-      return false;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      notifyError("Bitte gebe eine gültige E-Mail-Adresse ein!");
-      return false;
-    }
-
-    if (email !== validateEmail) {
-      notifyError("Die E-Mail-Adressen stimmen nicht überein!");
-      return false;
-    }
-
-    if (gender === genderOptions[0].value) {
-      notifyError("Bitte wähle dein Geschlecht aus!");
-      return false;
-    }
-    if (marja === marjaOptions[0].value) {
-      notifyError("Bitte wähle einen Marja aus!");
-      return false;
-    }
-
-    if (!acceptRules) {
-      notifyError(
-        "Bitte lies die Richtlinien und akzeptiere sie um die E-Mail versenden zu können!"
-      );
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleInputChange = (name, value) => {
-    setFormState({ ...formState, [name]: value });
-  };
-
-  const checkInternetConnection = async () => {
-    const networkState = await Network.getNetworkStateAsync();
-    return networkState.isConnected && networkState.isInternetReachable;
-  };
-
-  const send = async () => {
-    if (validateForm()) {
-      const isConnected = await checkInternetConnection();
-      if (isConnected) {
-        setIsFormValid(true); // Mark the form as valid
-        setShowCaptcha(true); // Show hCaptcha challenge
-      } else {
-        notifyError(
-          "Bitte stelle sicher, dass du mit dem Internet verbunden bist, bevor du eine Frage schickst"
-        );
-      }
-    }
-  };
-
+  // Verify before sending
   const verifiedToken = async (token: string) => {
     setCaptchaToken(token);
-
-    if (isFormValid) {
+    await formik.validateForm(); // Ensure the form is validated
+    if (formik.isValid) {
       const success = await sendEmail(
-        name,
-        age,
-        email,
-        marja,
-        gender,
-        question
+        formik.values.name,
+        formik.values.age,
+        formik.values.email,
+        formik.values.marja,
+        formik.values.gender,
+        formik.values.question
       );
       if (success) {
-        setShowCaptcha(false); // Hide captcha on success
+        setShowCaptcha(false);
         notifySuccess(
           "Frage erfolgreich gesendet! Du erhälst die Antwort in wenigen Tagen als Email!"
         );
         router.navigate("/");
-        setFormState(initialFormState); // Reset form state on success
+        formik.resetForm(); // Reset form on success
       } else {
         notifyError("Fehler! Versuch es später erneut");
       }
@@ -208,7 +90,11 @@ export default function askQuestion() {
           headerTitle: "Eine Frage stellen",
           headerRight: () => (
             <View style={styles.headerButton}>
-              <Pressable onPress={send}>
+              <Pressable
+                onPress={() => {
+                  formik.handleSubmit();
+                }}
+              >
                 <Text style={styles.submitButtonText}>Senden</Text>
               </Pressable>
             </View>
@@ -219,78 +105,100 @@ export default function askQuestion() {
         contentContainerStyle={styles.scrollContent}
         style={styles.scrollStyle}
         ref={scrollViewRef}
-        // onContentSizeChange={() =>
-        //   scrollViewRef.current.scrollToEnd({ animated: true })
-        // }
       >
         <View style={styles.textInputContainer}>
           <TextInput
             style={[styles.input, themeStyles.inverseTextInput]}
-            onChangeText={(value) => handleInputChange("name", value)}
-            value={name}
+            onChangeText={formik.handleChange("name")}
+            value={formik.values.name}
             placeholder='Name (optional)'
             keyboardType='default'
           />
           <TextInput
             style={[styles.input, themeStyles.inverseTextInput]}
-            onChangeText={(value) => handleInputChange("age", value)}
-            value={age}
+            onChangeText={formik.handleChange("age")}
+            value={formik.values.age}
             placeholder='Alter (Pflicht)'
             keyboardType='numeric'
           />
+          {formik.errors.age ? (
+            <View style={styles.validationError}>
+              <Text style={[styles.validationErrorText, themeStyles.error]}>
+                {formik.errors.age}
+              </Text>
+            </View>
+          ) : null}
           <TextInput
             style={[styles.input, themeStyles.inverseTextInput]}
-            onChangeText={(value) => handleInputChange("email", value)}
-            value={email}
+            onChangeText={formik.handleChange("email")}
+            value={formik.values.email}
             placeholder='E-Mail (Pflicht)'
             keyboardType='email-address'
           />
+          {formik.errors.email ? (
+            <View style={styles.validationError}>
+              <Text style={[styles.validationErrorText, themeStyles.error]}>
+                {formik.errors.email}
+              </Text>
+            </View>
+          ) : null}
           <TextInput
             style={[styles.input, themeStyles.inverseTextInput]}
-            onChangeText={(value) => handleInputChange("validateEmail", value)}
-            value={validateEmail}
+            onChangeText={formik.handleChange("validateEmail")}
+            value={formik.values.validateEmail}
             placeholder='E-Mail wiederholen (Pflicht)'
             keyboardType='email-address'
           />
 
+          {formik.errors.validateEmail ? (
+            <View style={styles.validationError}>
+              <Text style={[styles.validationErrorText, themeStyles.error]}>
+                {formik.errors.validateEmail}
+              </Text>
+            </View>
+          ) : null}
+
           {/* Gender Picker */}
-          <Pressable
-            onPress={() => setIsPickerVisibleGender(true)}
-            style={
-              {
-                //outline: "none",
-              } as TextInputProps["style"]
-            }
-          >
+
+          <Pressable onPress={() => setIsPickerVisibleGender(true)}>
             <View style={[styles.pickerTrigger, themeStyles.inverseTextInput]}>
               <Text
                 style={[styles.pickerText, themeStyles.inverseQuestionText]}
               >
-                {genderOptions.find((option) => option.value === gender)?.label}
+                {
+                  genderOptions.find(
+                    (option) => option.value === formik.values.gender
+                  )?.label
+                }
               </Text>
             </View>
           </Pressable>
+
           <Modal
             visible={isPickerVisibleGender}
             transparent={true}
             animationType='slide'
-            onRequestClose={() => setIsPickerVisibleGender(false)}
+            onRequestClose={() => {
+              setIsPickerVisibleGender(false);
+            }}
           >
             <Pressable
               style={[
                 styles.modalContainer,
                 themeStyles.modalQuestionBlurredBackground,
               ]}
-              onPress={() => setIsPickerVisibleGender(false)}
+              onPress={() => {
+                setIsPickerVisibleGender(false);
+              }}
             >
               <Pressable
                 style={styles.pickerContainer}
                 onPress={(event) => event.stopPropagation()}
               >
                 <Picker
-                  selectedValue={gender}
+                  selectedValue={formik.values.gender}
                   onValueChange={(itemValue) => {
-                    handleInputChange("gender", itemValue);
+                    formik.setFieldValue("gender", itemValue);
                     setIsPickerVisibleGender(false);
                   }}
                 >
@@ -305,22 +213,28 @@ export default function askQuestion() {
               </Pressable>
             </Pressable>
           </Modal>
+          {formik.errors.gender ? (
+            <View style={styles.validationError}>
+              <Text style={[styles.validationErrorText, themeStyles.error]}>
+                {formik.errors.gender}
+              </Text>
+            </View>
+          ) : null}
+
+          {/* Gender Picker */}
 
           {/* Marja Picker */}
 
-          <Pressable
-            onPress={() => setIsPickerVisibleMarja(true)}
-            style={
-              {
-                //outline: "none",
-              } as TextInputProps["style"]
-            }
-          >
+          <Pressable onPress={() => setIsPickerVisibleMarja(true)}>
             <View style={[styles.pickerTrigger, themeStyles.inverseTextInput]}>
               <Text
                 style={[styles.pickerText, themeStyles.inverseQuestionText]}
               >
-                {marjaOptions.find((option) => option.value === marja)?.label}
+                {
+                  marjaOptions.find(
+                    (option) => option.value === formik.values.marja
+                  )?.label
+                }
               </Text>
             </View>
           </Pressable>
@@ -328,23 +242,27 @@ export default function askQuestion() {
             visible={isPickerVisibleMarja}
             transparent={true}
             animationType='slide'
-            onRequestClose={() => setIsPickerVisibleMarja(false)}
+            onRequestClose={() => {
+              setIsPickerVisibleMarja(false);
+            }}
           >
             <Pressable
               style={[
                 styles.modalContainer,
                 themeStyles.modalQuestionBlurredBackground,
               ]}
-              onPress={() => setIsPickerVisibleMarja(false)}
+              onPress={() => {
+                setIsPickerVisibleMarja(false);
+              }}
             >
               <Pressable
                 style={styles.pickerContainer}
                 onPress={(event) => event.stopPropagation()}
               >
                 <Picker
-                  selectedValue={marja}
+                  selectedValue={formik.values.marja}
                   onValueChange={(itemValue) => {
-                    handleInputChange("marja", itemValue);
+                    formik.setFieldValue("marja", itemValue);
                     setIsPickerVisibleMarja(false);
                   }}
                 >
@@ -359,12 +277,23 @@ export default function askQuestion() {
               </Pressable>
             </Pressable>
           </Modal>
+          {formik.errors.marja ? (
+            <View style={styles.validationError}>
+              <Text style={[styles.validationErrorText, themeStyles.error]}>
+                {formik.errors.marja}
+              </Text>
+            </View>
+          ) : null}
+
+          {/* Marja Picker end */}
 
           <View style={styles.rules}>
             <Checkbox
               style={styles.rulesCheckbox}
-              value={acceptRules}
-              onValueChange={(value) => handleInputChange("acceptRules", value)}
+              value={formik.values.acceptRules}
+              onValueChange={(value) => {
+                formik.setFieldValue("acceptRules", value);
+              }}
             />
             <View style={styles.linkContainer}>
               <Text style={styles.linkText}>Ich habe die</Text>
@@ -374,19 +303,40 @@ export default function askQuestion() {
               <Text style={styles.linkText}>gelesen und akzeptiert.</Text>
             </View>
           </View>
+          {formik.errors.acceptRules ? (
+            <View style={styles.validationError}>
+              <Text style={[styles.validationErrorText, themeStyles.error]}>
+                {formik.errors.acceptRules}
+              </Text>
+            </View>
+          ) : null}
+
           <TextInput
             style={[
               styles.input,
               styles.inputQuestion,
               themeStyles.inverseTextInput,
             ]}
-            onChangeText={(value) => handleInputChange("question", value)}
-            value={question}
+            value={formik.values.question}
+            onChangeText={(value) => formik.setFieldValue("question", value)}
             placeholder='Frage (Pflicht)'
             multiline={true}
             keyboardType='default'
           />
         </View>
+        {formik.errors.question ? (
+          <View style={styles.validationError}>
+            <Text
+              style={[
+                styles.validationErrorText,
+                styles.validationErrorInput,
+                themeStyles.error,
+              ]}
+            >
+              {formik.errors.question}
+            </Text>
+          </View>
+        ) : null}
       </ScrollView>
       {showCaptcha && (
         <HCaptcha
@@ -453,6 +403,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
   },
+  validationError: {
+    alignItems: "center",
+  },
+  validationErrorText: {},
+  validationErrorInput: {
+    marginTop: -10,
+    marginBottom: 20,
+  },
   pickerText: {
     textAlign: "center",
     fontSize: 16,
@@ -498,7 +456,7 @@ const styles = StyleSheet.create({
   },
   inputQuestion: {
     flex: 1,
-    marginBottom: 50,
+    marginBottom: 20,
     paddingHorizontal: 12,
     paddingTop: 8,
     paddingBottom: 20,

@@ -45,6 +45,7 @@
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
     "fast-xml-parser": "^4.4.1",
+    "formik": "^2.4.6",
     "localforage": "^1.10.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -60,6 +61,7 @@
     "react-native-web": "~0.19.10",
     "react-toastify": "^10.0.5",
     "regenerator-runtime": "^0.14.1",
+    "yup": "^1.4.0",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
