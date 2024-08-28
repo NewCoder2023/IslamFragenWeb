@@ -241,8 +241,8 @@ const styles = StyleSheet.create({
   toTopButton: {
     position: "absolute",
     backgroundColor: "transparent",
-    top: 200,
-    right: 10,
+    top: 400,
+    right: 20,
     zIndex: 1,
   },
   FlatListImageStyle: {

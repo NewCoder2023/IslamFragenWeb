@@ -2,7 +2,7 @@
   "name": "islam-fragen-web",
   "main": "expo-router/entry",
   "version": "1.0.0",
-  "homepage": "https://NewCoder2023.github.io/IslamFragenWeb",
+  "homepage": "https://islam-fragen.de",
   "scripts": {
     "start": "expo start",
     "web-build": "npx expo export",

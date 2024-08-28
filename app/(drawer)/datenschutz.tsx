@@ -8,20 +8,7 @@ import { coustomTheme } from "components/coustomTheme";
 
 export default function datenschutz() {
   const datenschutz = `
- # **datenschutz** 
  
- **Angaben gemäß § 5 TMG:**
-
- Bund für islamische Bildung e. V.
-
- Füssener Str. 15
- 12309 Berlin
- 
- Kontakt:
- E-Mail: info@bufib.de
- 
- Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
- Bund für islamische Bildung e.V.
   `;
 
   const themeStyles = coustomTheme();

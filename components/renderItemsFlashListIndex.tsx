@@ -5,7 +5,6 @@ import { Image } from "expo-image";
 import Octicons from "@expo/vector-icons/Octicons";
 import Feather from "@expo/vector-icons/Feather";
 import { deletePosts } from "components/deletePosts";
-import Colors from "constants/Colors";
 import ImageCount from "./ImageCount";
 import { coustomTheme } from "./coustomTheme";
 import { useColorScheme } from "hooks/useColorScheme.web";
@@ -92,14 +91,14 @@ export const RenderItemsFlashList = ({
                   displayImageCounter={item.imagePaths.map((_, index) =>
                     index === currentIndex ? (
                       <Octicons
-                        name='dot'
+                        name='dot-fill'
                         size={15}
                         color='black'
                         style={themeStyles.characterCountNewsImage}
                       />
                     ) : (
                       <Octicons
-                        name='dot-fill'
+                        name='dot'
                         size={15}
                         color='black'
                         style={themeStyles.characterCountNewsImage}

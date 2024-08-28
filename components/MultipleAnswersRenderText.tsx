@@ -88,7 +88,7 @@ const MultipleAnswers: React.FC<MultipleAnswersProps> = ({
           <View style={styles.noInternet}>
             <Text style={[styles.noInternetText, themeStyles.error]}>
               Es besteht akutell keine Internetverbindung! Änderungen an dieser
-              Frage werden können nicht angezeigt werden!
+              Frage können nicht angezeigt werden!
             </Text>
           </View>
         )}

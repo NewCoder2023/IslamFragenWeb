@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import * as Network from "expo-network";
-import { notifySuccess, notifyError } from "./toast";
 
 export default function useNetworkStatus() {
   const [isConnected, setIsConnected] = useState<boolean>(navigator.onLine);
