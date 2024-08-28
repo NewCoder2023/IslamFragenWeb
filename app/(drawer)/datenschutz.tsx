@@ -3,7 +3,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const App = () => {
   return (
-    <ScrollView style={{marginHorizontal: 15}}>
+    <ScrollView style={{marginHorizontal: 15, marginBottom: 10}}>
       <div
         dangerouslySetInnerHTML={{
           __html: `
