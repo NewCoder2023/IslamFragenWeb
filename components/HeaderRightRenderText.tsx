@@ -29,7 +29,7 @@ const HeaderRight: React.FC<HeaderRightProps> = ({
     <View style={styles.buttonsHeaderContainer}>
       <Ionicons
         name='text'
-        size={26}
+        size={25}
         style={themeStyles.fontSizeIcon}
         onPress={() => setIsPickerVisible(true)}
       />
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   buttonsHeaderContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    gap: 15,
+    gap: 12,
     backgroundColor: "transparent",
     paddingRight: 15,
   },
