@@ -1,10 +1,12 @@
 import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
+import { coustomTheme } from "components/coustomTheme";
 
 const App = () => {
+  const themeStyles = coustomTheme()
   return (
-    <ScrollView style={{marginHorizontal: 15, marginBottom: 10}}>
-      <div
+    <ScrollView style={[{paddingHorizontal: 15, marginBottom: 10}, themeStyles.containerDefault]}>
+      <div style={themeStyles.inverseText}
         dangerouslySetInnerHTML={{
           __html: `
           
