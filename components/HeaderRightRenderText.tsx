@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useColorScheme } from "hooks/useColorScheme.web";
 import { coustomTheme } from "components/coustomTheme";
 
@@ -26,12 +27,13 @@ const HeaderRight: React.FC<HeaderRightProps> = ({
 
   return (
     <View style={styles.buttonsHeaderContainer}>
-      <MaterialCommunityIcons
-        name='format-letter-case'
+      <Ionicons
+        name='text'
         size={26}
         style={themeStyles.fontSizeIcon}
         onPress={() => setIsPickerVisible(true)}
       />
+
       <AntDesign
         name={isInFavorites(id, table) ? "star" : "staro"}
         size={24}

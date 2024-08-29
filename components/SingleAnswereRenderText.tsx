@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, Pressable, ScrollView } from "react-native";
 import { Text, View } from "./Themed";
-import { MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import Feather from "@expo/vector-icons/Feather";
 import CustomMarkdown from "components/MarkdownRenderText";
 import { regex } from "./regexPatternRenderText";
 
@@ -64,8 +65,8 @@ const SingleAnswer: React.FC<AnswersScrollViewProps> = ({
             <View style={styles.copyContainerSingle}>
               {isCopiedSingle ? (
                 <View style={styles.copyDoneContainer}>
-                  <MaterialIcons
-                    name='done'
+                  <Feather
+                    name='check'
                     size={24}
                     color={colorScheme == "dark" ? "white" : "black"}
                   />

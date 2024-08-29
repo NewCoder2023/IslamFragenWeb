@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
-import { Text, View } from "./Themed";
+import { View } from "./Themed";
 import React from "react";
 import { Link } from "expo-router";
 import { Pressable } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import Entypo from "@expo/vector-icons/Entypo";
 import { useColorScheme } from "react-native";
 import { coustomTheme } from "./coustomTheme";
 
@@ -15,11 +15,7 @@ const HeaderFlashListIndex = ({ isLoggedIn }: any) => {
       {isLoggedIn ? (
         <Link href='/adminDashboard' asChild>
           <Pressable>
-            <MaterialIcons
-              name='add-circle-outline'
-              size={34}
-              style={themeStyles.addNewsButton}
-            />
+            <Entypo name='plus' size={34} style={themeStyles.addNewsButton} />
           </Pressable>
         </Link>
       ) : null}

@@ -1,7 +1,6 @@
 import { View, Text } from "components/Themed";
 import { StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useFocusEffect } from "@react-navigation/native";
 import { router, useLocalSearchParams } from "expo-router";
 import Colors from "constants/Colors";
 import { Stack } from "expo-router";

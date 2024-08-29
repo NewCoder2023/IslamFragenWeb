@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, Pressable, ScrollView } from "react-native";
 import { Text, View } from "./Themed";
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import Feather from "@expo/vector-icons/Feather";
 import CustomMarkdown from "components/MarkdownRenderText";
 import { Image } from "expo-image";
 import Checkbox from "expo-checkbox";
@@ -101,8 +102,8 @@ const MultipleAnswers: React.FC<MultipleAnswersProps> = ({
               <View style={styles.copyContainer}>
                 {isCopiedMultiple[answer.marja] ? (
                   <View style={styles.copyDoneContainer}>
-                    <MaterialIcons
-                      name='done'
+                    <Feather
+                      name='check'
                       size={24}
                       color={colorScheme == "dark" ? "white" : "black"}
                     />
