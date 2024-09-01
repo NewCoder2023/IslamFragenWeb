@@ -5,6 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/Feather";
 import CustomMarkdown from "components/MarkdownRenderText";
 import { regex } from "./regexPatternRenderText";
+import NoConnection from "components/NoConnection";
 
 interface AnswersScrollViewProps {
   themeStyles: any;
@@ -52,14 +53,7 @@ const SingleAnswer: React.FC<AnswersScrollViewProps> = ({
             {displayQuestion}
           </Text>
         </View>
-        {!isConnected && (
-          <View style={styles.noInternet}>
-            <Text style={[styles.noInternetText, themeStyles.error]}>
-              Es besteht akutell keine Internetverbindung! Änderungen an dieser
-              Frage können nicht angezeigt werden!
-            </Text>
-          </View>
-        )}
+        {!isConnected && <NoConnection />}
         <View style={styles.answersContainer}>
           <View style={[styles.singleAnswers, themeStyles.containerContrast]}>
             <View style={styles.copyContainerSingle}>
@@ -121,18 +115,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-  },
-  noInternet: {
-    marginTop: 15,
-    marginHorizontal: 20,
-    padding: 15,
-    borderWidth: 2,
-    borderRadius: 20,
-  },
-  noInternetText: {
-    textAlign: "center",
-    fontSize: 15,
-    fontWeight: "bold",
   },
   questionText: {
     textAlign: "center",

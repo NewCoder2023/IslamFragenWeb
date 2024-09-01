@@ -11,17 +11,45 @@ import { useColorScheme } from "hooks/useColorScheme.web";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import queryClient from "components/queryClient";
+import { Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import Entypo from "@expo/vector-icons/Entypo";
+import Octicons from "@expo/vector-icons/Octicons";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useFonts } from "expo-font";
+import preLoadImages from "components/preLoadImages";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const [loaded] = useFonts({
+    ...Feather.font,
+    ...AntDesign.font,
+    ...Entypo.font,
+    ...Octicons.font,
+    ...Ionicons.font,
+  });
+
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    SplashScreen.hideAsync();
-  }, []);
+    const loadResources = async () => {
+      try {
+        await preLoadImages();
+        if (loaded) {
+          await SplashScreen.hideAsync();
+          setIsReady(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  if (!colorScheme) {
+    loadResources();
+  }, [loaded]);
+
+  if (!isReady || !colorScheme) {
     return null;
   }
 

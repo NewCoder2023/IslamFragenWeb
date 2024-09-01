@@ -30,7 +30,7 @@ export default function useNetworkStatus() {
     window.addEventListener("offline", handleOffline);
 
     // Poll for network status every 10 seconds
-    const intervalId = setInterval(checkNetworkStatus, 10000);
+    const intervalId = setInterval(checkNetworkStatus, 5000);
 
     // Cleanup on component unmount
     return () => {

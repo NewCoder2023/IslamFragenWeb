@@ -23,6 +23,10 @@ import { Image } from "expo-image";
 import { useRefetchNewsStore } from "components/refetchNews";
 import { useIsNewUpdateAvailable } from "components/newsUpdateStore";
 import { Loading } from "components/Loading";
+import useNetworkStatus from "components/useNetworkStatus";
+import NoConnection from "components/NoConnection";
+import { CustomToastContainer } from "components/toast";
+import { notifyError } from "components/toast";
 
 export default function index() {
   const [refreshing, setRefreshing] = useState(false);
@@ -45,6 +49,14 @@ export default function index() {
   const themeStyles = coustomTheme();
   const { hasRefetched, setRefetch } = useRefetchNewsStore();
   const { newUpdateAvailable, update } = useIsNewUpdateAvailable();
+  const { isConnected } = useNetworkStatus();
+
+  useEffect(() => {
+    if (isConnected === false) {
+      notifyError("Keine Internetverbindung!");
+    }
+  }, [isConnected]);
+
 
   useEffect(() => {
     if (!hasRefetched) {
@@ -78,6 +90,7 @@ export default function index() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
+      <CustomToastContainer />
       <View style={styles.mainContainer}>
         {isLoading ? (
           <View style={styles.activityContainer}>
@@ -94,6 +107,9 @@ export default function index() {
             />
           </View>
         ) : null}
+        {!isConnected && (
+          <NoConnection message='Es besteht akutell keine Internetverbindung! Neuigkeiten können nicht angezeigt werden!' />
+        )}
         {updateAvailable && (
           <Pressable
             style={styles.updateContainer}

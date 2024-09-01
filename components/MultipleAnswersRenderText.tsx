@@ -7,6 +7,7 @@ import CustomMarkdown from "components/MarkdownRenderText";
 import { Image } from "expo-image";
 import Checkbox from "expo-checkbox";
 import { regex } from "./regexPatternRenderText";
+import NoConnection from "components/NoConnection";
 
 interface MultipleAnswersProps {
   themeStyles: any;
@@ -86,11 +87,8 @@ const MultipleAnswers: React.FC<MultipleAnswersProps> = ({
           ))}
         </View>
         {!isConnected && (
-          <View style={styles.noInternet}>
-            <Text style={[styles.noInternetText, themeStyles.error]}>
-              Es besteht akutell keine Internetverbindung! Änderungen an dieser
-              Frage können nicht angezeigt werden!
-            </Text>
+          <View style={styles.noConnectionContainer}>
+            <NoConnection />
           </View>
         )}
         <View style={styles.answersContainer}>
@@ -208,18 +206,8 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     fontWeight: "bold",
   },
-  noInternet: {
-    marginTop: 10,
-    marginHorizontal: 20,
-    marginBottom: 30,
-    padding: 15,
-    borderWidth: 2,
-    borderRadius: 20,
-  },
-  noInternetText: {
-    textAlign: "center",
-    fontSize: 15,
-    fontWeight: "bold",
+  noConnectionContainer: {
+    marginBottom: 20
   },
   answersContainer: {
     flex: 1,
